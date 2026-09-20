@@ -14,21 +14,16 @@ service:
   port: 8080
 
 miniflux:
-  # URL reachable by the pod. For a same-namespace Miniflux Service, this is
-  # commonly http://miniflux:8080.
   url: http://miniflux:8080
   apiKey: ""
   username: ""
   password: ""
 
 mcp:
-  transport: streamable-http
-  httpAddr: ":8080"
-  httpPath: /mcp
+  port: 8080
+  path: /mcp
   authToken: ""
 
-# Set this to use a pre-created Secret. It must contain MCP_AUTH_TOKEN and
-# either MINIFLUX_API_KEY or both MINIFLUX_USERNAME and MINIFLUX_PASSWORD.
 existingSecret: ""
 
 # Ingress is enabled by default for a conventional community installation.

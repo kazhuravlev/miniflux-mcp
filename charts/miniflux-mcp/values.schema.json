@@ -158,7 +158,6 @@
         "annotations": {
           "description": "Annotations added to the Ingress.",
           "type": "object",
-          "additionalProperties": { "type": "string" },
           "default": {}
         },
         "hosts": {
