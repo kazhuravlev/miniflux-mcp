@@ -37,13 +37,13 @@ Configuration for the miniflux-mcp Helm chart.
 | ingress.className | `string` |  | string | `"nginx"` | Ingress class name. |
 | ingress.annotations | `object` |  | object | `{}` | Annotations added to the Ingress. |
 | ingress.hosts | `array` |  | object | `[{"host": "mcp.example.com", "paths": [{"path": "/mcp", "pathType": "Prefix"}]}]` | Ingress hosts and paths. |
-| ingress.hosts[].host | `string` |  | string |  |  |
-| ingress.hosts[].paths | `array` |  | object |  |  |
-| ingress.hosts[].paths[].path | `string` |  | string |  |  |
-| ingress.hosts[].paths[].pathType | `string` |  | `Exact` `Prefix` `ImplementationSpecific` |  |  |
+| ingress.hosts[].host | `string` |  | string |  | Hostname matched by the Ingress rule. |
+| ingress.hosts[].paths | `array` |  | object |  | Paths exposed for the host. |
+| ingress.hosts[].paths[].path | `string` |  | string |  | URL path matched by the Ingress rule. |
+| ingress.hosts[].paths[].pathType | `string` |  | `Exact` `Prefix` `ImplementationSpecific` |  | Kubernetes Ingress path matching mode. |
 | ingress.tls | `array` |  | object | `[]` | Ingress TLS configuration. |
-| ingress.tls[].secretName | `string` |  | string |  |  |
-| ingress.tls[].hosts | `array` |  | string |  |  |
+| ingress.tls[].secretName | `string` |  | string |  | Secret containing the TLS certificate. |
+| ingress.tls[].hosts | `array` |  | string |  | Hosts covered by the TLS certificate. |
 | resources | `object` |  | object | `{"requests": {"cpu": "10m", "memory": "32Mi"}, "limits": {"cpu": "250m", "memory": "128Mi"}}` | Container resource requests and limits. |
 | podSecurityContext | `object` |  | object | `{"runAsNonRoot": true, "runAsUser": 65532, "runAsGroup": 65532, "fsGroup": 65532}` | Pod-level security context. |
 | securityContext | `object` |  | object | `{"allowPrivilegeEscalation": false, "readOnlyRootFilesystem": true, "capabilities": {"drop": ["ALL"]}}` | Container-level security context. |
