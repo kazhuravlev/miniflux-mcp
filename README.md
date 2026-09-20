@@ -125,6 +125,13 @@ Add the remote server to your project-level `.mcp.json`:
 
 The unauthenticated health endpoint is available at `/healthz`. For deployment outside a trusted private network, put the server behind an HTTPS reverse proxy so the Bearer token is encrypted in transit. One server process uses one configured Miniflux identity, so every connected MCP client has that identity's permissions.
 
+## Kubernetes
+
+The Helm chart is available in `charts/miniflux-mcp`. See the chart README for
+installation and configuration values. For production, set `existingSecret` to
+a Secret containing `MCP_AUTH_TOKEN` and either `MINIFLUX_API_KEY` or the
+`MINIFLUX_USERNAME` and `MINIFLUX_PASSWORD` pair.
+
 ## Available Tools
 
 The Miniflux MCP Server provides **40+ tools** covering all Miniflux API functionality, which can be found in the [Miniflux API Reference](https://miniflux.app/docs/api.html#go-client).
