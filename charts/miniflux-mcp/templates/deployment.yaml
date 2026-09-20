@@ -14,6 +14,10 @@ spec:
       labels:
         {{- include "miniflux-mcp.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -24,40 +28,41 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: {{ .Values.mcp.port }}
               protocol: TCP
           env:
             - name: MINIFLUX_URL
-              value: {{ required "miniflux.url is required" .Values.miniflux.url | quote }}
+              value: {{ .Values.miniflux.url | quote }}
             - name: MCP_TRANSPORT
-              value: {{ .Values.mcp.transport | quote }}
+              value: streamable-http
             - name: MCP_HTTP_ADDR
-              value: {{ .Values.mcp.httpAddr | quote }}
+              value: {{ printf ":%v" .Values.mcp.port | quote }}
             - name: MCP_HTTP_PATH
-              value: {{ .Values.mcp.httpPath | quote }}
+              value: {{ .Values.mcp.path | quote }}
             - name: MCP_AUTH_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "miniflux-mcp.secretName" . }}
-                  key: MCP_AUTH_TOKEN
-            {{- if .Values.miniflux.apiKey }}
+                  key: {{ .Values.secretKeys.mcpAuthToken | quote }}
+                  optional: true
             - name: MINIFLUX_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ include "miniflux-mcp.secretName" . }}
-                  key: MINIFLUX_API_KEY
-            {{- else }}
+                  key: {{ .Values.secretKeys.minifluxApiKey | quote }}
+                  optional: true
             - name: MINIFLUX_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: {{ include "miniflux-mcp.secretName" . }}
-                  key: MINIFLUX_USERNAME
+                  key: {{ .Values.secretKeys.minifluxUsername | quote }}
+                  optional: true
             - name: MINIFLUX_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ include "miniflux-mcp.secretName" . }}
-                  key: MINIFLUX_PASSWORD
-            {{- end }}
+                  key: {{ .Values.secretKeys.minifluxPassword | quote }}
+                  optional: true
           readinessProbe:
             httpGet:
               path: /healthz
@@ -72,9 +77,15 @@ spec:
             periodSeconds: 20
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
-        {{- toYaml .Values.nodeSelector | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
       affinity:
-        {{- toYaml .Values.affinity | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
       tolerations:
-        {{- toYaml .Values.tolerations | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
