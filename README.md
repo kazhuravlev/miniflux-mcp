@@ -132,6 +132,15 @@ installation and configuration values. For production, set `existingSecret` to
 a Secret containing `MCP_AUTH_TOKEN` and either `MINIFLUX_API_KEY` or the
 `MINIFLUX_USERNAME` and `MINIFLUX_PASSWORD` pair.
 
+### Release new version of helm chart
+
+1. Create a branch and commit your chart changes.
+2. Update version into Chart.yaml. For example - `1.2.3`.
+3. Commit changes and tag the commit `git tag helm-v1.2.3`.
+4. Push the branch and tag.
+5. Wait for the Release Helm chart workflow.
+
+
 ## Available Tools
 
 The Miniflux MCP Server provides **40+ tools** covering all Miniflux API functionality, which can be found in the [Miniflux API Reference](https://miniflux.app/docs/api.html#go-client).
