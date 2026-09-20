@@ -33,15 +33,12 @@ ingress:
   enabled: true
   className: nginx
   annotations: {}
-  host: mcp.example.com
-  path: /mcp
-  pathType: Prefix
-  tls:
-    enabled: false
-    secretName: ""
-  certManager:
-    enabled: false
-    clusterIssuer: ""
+  hosts:
+    - host: mcp.example.com
+      paths:
+        - path: /mcp
+          pathType: Prefix
+  tls: []
 
 resources:
   requests:

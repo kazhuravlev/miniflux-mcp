@@ -167,14 +167,22 @@
           "items": {
             "type": "object",
             "properties": {
-              "host": { "type": "string" },
+              "host": {
+                "description": "Hostname matched by the Ingress rule.",
+                "type": "string"
+              },
               "paths": {
+                "description": "Paths exposed for the host.",
                 "type": "array",
                 "items": {
                   "type": "object",
                   "properties": {
-                    "path": { "type": "string" },
+                    "path": {
+                      "description": "URL path matched by the Ingress rule.",
+                      "type": "string"
+                    },
                     "pathType": {
+                      "description": "Kubernetes Ingress path matching mode.",
                       "type": "string",
                       "enum": ["Exact", "Prefix", "ImplementationSpecific"]
                     }
@@ -183,7 +191,12 @@
               }
             }
           },
-          "default": [{ "host": "mcp.example.com", "paths": [{ "path": "/mcp", "pathType": "Prefix" }] }]
+          "default": [
+            {
+              "host": "mcp.example.com",
+              "paths": [{ "path": "/mcp", "pathType": "Prefix" }]
+            }
+          ]
         },
         "tls": {
           "description": "Ingress TLS configuration.",
@@ -191,8 +204,15 @@
           "items": {
             "type": "object",
             "properties": {
-              "secretName": { "type": "string" },
-              "hosts": { "type": "array", "items": { "type": "string" } }
+              "secretName": {
+                "description": "Secret containing the TLS certificate.",
+                "type": "string"
+              },
+              "hosts": {
+                "description": "Hosts covered by the TLS certificate.",
+                "type": "array",
+                "items": { "type": "string" }
+              }
             }
           },
           "default": []
@@ -210,7 +230,12 @@
     "podSecurityContext": {
       "description": "Pod-level security context.",
       "type": "object",
-      "default": { "runAsNonRoot": true, "runAsUser": 65532, "runAsGroup": 65532, "fsGroup": 65532 }
+      "default": {
+        "runAsNonRoot": true,
+        "runAsUser": 65532,
+        "runAsGroup": 65532,
+        "fsGroup": 65532
+      }
     },
     "securityContext": {
       "description": "Container-level security context.",
