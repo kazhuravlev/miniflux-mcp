@@ -26,8 +26,12 @@ mcp:
 
 existingSecret: ""
 
-# Ingress is enabled by default for a conventional community installation.
-# Set ingress.className to tailscale (and adjust annotations) for Tailscale.
+secretKeys:
+  mcpAuthToken: MCP_AUTH_TOKEN
+  minifluxApiKey: MINIFLUX_API_KEY
+  minifluxUsername: MINIFLUX_USERNAME
+  minifluxPassword: MINIFLUX_PASSWORD
+
 ingress:
   enabled: true
   className: nginx
