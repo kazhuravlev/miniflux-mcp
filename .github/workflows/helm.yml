@@ -6,13 +6,13 @@ on:
     paths:
       - "charts/**"
       - "Makefile"
-      - ".github/workflows/helm.yml"
+      - ".github/workflows/helm*.yml"
   pull_request:
     branches: [main]
     paths:
       - "charts/**"
       - "Makefile"
-      - ".github/workflows/helm.yml"
+      - ".github/workflows/helm*.yml"
   workflow_dispatch:
 
 permissions:
@@ -36,6 +36,7 @@ jobs:
           charts/miniflux-mcp/values.yaml
           charts/miniflux-mcp/values.schema.json
           .github/workflows/helm.yml
+          .github/workflows/helm-release.yml
 
       - name: Lint chart
         run: helm lint charts/miniflux-mcp
